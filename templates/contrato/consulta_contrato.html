@@ -1,0 +1,24 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Consulta de formato a editar:</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" onclick="cerrar_modal();">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="form_consulta" action="{% url 'entidades:consulta_contrato' %}" method="POST">
+            {% csrf_token %}
+            <div class="modal-body">
+                <div id="errores">
+
+                </div>
+                {{ form.as_p }}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" onclick="cerrar_modal();">Cancelar</button>
+                <button id="boton_creacion" class="btn btn-primary" type="button"
+                    onclick="consultar();">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>

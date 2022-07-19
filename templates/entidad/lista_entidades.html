@@ -1,0 +1,55 @@
+{% extends 'inicio/plantilla_inicio.html' %}
+{% load static %}
+{% block title %} Listado de entidades {% endblock title %}
+
+{% block estilos-css %}
+    
+{% endblock estilos-css %}
+
+{% block body %}
+    <div class="container-fluid px-4 mx-1">
+        <div class="row w-100 my-1 mx-0 p-0 text-center alert alert-primary" role="alert">
+            <h3>Listado de entidades</h3>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Tabla de entidades
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple" class="table table-striped table-bordered dt-responsive nowrap"style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre entidad</th>
+                            <th scope="col">NIT</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">Rector</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entidad in entidades %}
+                        <tr>
+                            <td>{{ entidad.1 }}</td>
+                            <td>{{ entidad.2 }}</td>
+                            <td>{{ entidad.3 }}</td>
+                            <td>{{ entidad.4 }}</td>
+                            <td style="padding-right:0px;">
+                                <div class="btn-group mr-2" role="group" aria-label="First group" style="float: center;">
+                                    <button type="button" style="float: center;" class="btn btn-primary btn-sm" onclick="abrir_modal_edicion('/entidades/editar_entidad/'+{{ entidad.0 }}+'/')">Editar</button>
+                                    <button type="button" style="float: center;" class="btn btn-danger btn-sm" onclick="abrir_modal_edicion('/entidades/eliminar_entidad/'+{{ entidad.0 }}+'/')">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+        <div class="modal fade" id="edicion" role="dialog">
+            
+        </div>
+    </div>
+
+{% endblock body %}

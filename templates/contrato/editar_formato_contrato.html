@@ -1,0 +1,57 @@
+{% extends 'inicio/plantilla_inicio.html' %}
+{% load static %}
+{% block title %} Editar formato de contrato {% endblock title %}
+
+{% block estilos-css %}
+    
+{% endblock estilos-css %}
+
+{% block body %}
+    <div class="container" style="margin-top: 50px;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <table class="table">
+                {{ itemform.management_form }}
+
+                {% for form in itemform.forms %}
+                    {% if forloop.first %}
+                        <thead>
+                        <tr>
+                            {% for field in form.visible_fields %}
+                                <th>{{ field.label|capfirst }}</th>
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                    {% endif %}
+                    <tr class="{% cycle row1 row2 %} formset_row">
+                        {% for field in form.visible_fields %}
+                            <td>
+                                {# Include the hidden fields in the form #}
+                                {% if forloop.first %}
+                                    {% for hidden in form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+                                {% endif %}
+                                {{ field.errors.as_ul }}
+                                {{ field }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" value="Save"/> <a href="{% url 'plantilla_inicio' %}">back to the list</a>
+        </form>
+    </div>
+{% endblock body %}
+
+{% block extra_js %} 
+<script>
+    $('.formset_row').formset({
+            addText: 'add family member',
+            deleteText: 'remove',
+            prefix: 'familymember_set'
+        });
+</script>
+
+{% endblock extra_js %}
